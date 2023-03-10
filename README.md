@@ -13,5 +13,5 @@ yarn serve
 ### Deployed frontend 
 ###### *json-server not supported, so the table will be empty
 ```
-https://patients-record-crud.netlify.app/
+[Click here!](https://patients-record-crud.netlify.app/)
 ```
