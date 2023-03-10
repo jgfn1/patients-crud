@@ -10,6 +10,13 @@ yarn install
 yarn serve
 ```
 
+
+### Credentials for simplified login
+```
+Username: username
+Password: password
+```
+
 ### Deployed frontend 
 [Click here!](https://patients-record-crud.netlify.app/)
-###### *json-server not supported, so the table will be empty
+###### *json-server not supported on deploy, so the table will be empty
