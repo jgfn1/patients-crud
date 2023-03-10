@@ -6,7 +6,19 @@ const patientSchema = yup.object().shape({
   photo: yup.string(),
   name: yup.string().required("Please enter a name"),
   mothersName: yup.string().required("Please enter the mother's name"),
-  birthdate: yup.string().required("Please enter a birthdate"),
+  birthdate: yup
+    .string()
+    .required("Please enter a birthdate")
+    .test("is-valid-date", "Invalid birthdate", (date) => {
+      const dateObj = new Date(date);
+      const now = new Date();
+      return (
+        dateObj instanceof Date &&
+        !isNaN(dateObj.getTime()) &&
+        dateObj.getTime() < now.getTime() &&
+        dateObj.getFullYear() > 1903
+      );
+    }),
   cpf: yup
     .string()
     .required("Please enter a CPF")
@@ -17,7 +29,7 @@ const patientSchema = yup.object().shape({
     .test("validate-cns", "Invalid CNS", cnsHelper.validateCns),
   address: yup.object().shape({
     logradouro: yup.string().required("Please enter the address"),
-    number: yup.string().required("Please enter the number"),
+    numero: yup.string().required("Please enter the number"),
     complemento: yup.string(),
     bairro: yup.string().required("Please enter the neighborhood"),
     localidade: yup.string().required("Please enter the city"),

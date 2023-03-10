@@ -12,10 +12,9 @@
           <v-card-title>
             Patients
             <v-spacer></v-spacer>
-            <v-btn @click="openCreatePatientDialog()" small text color="black">
-              Add new Patient
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
+            <create-patient-dialog
+              @onPatientCreated="refreshPage()"
+            ></create-patient-dialog>
           </v-card-title>
           <v-card-subtitle>
             <v-text-field
@@ -36,60 +35,51 @@
               :key="key"
             >
               <template v-slot:[`item.photo`]="{ item }">
-                <v-img :src="item.photo" width="75%"></v-img>
+                <v-img :src="item.photo" width="75%" max-width="100px"></v-img>
+              </template>
+              <template v-slot:[`item.address`]="{ item }">
+                {{ getFullAddressFromObject(item.address) }}
               </template>
               <template v-slot:[`item.actions`]="{ item }">
-                <v-icon
-                  small
-                  color="black"
-                  class="mr-2"
-                  @click="editPatient(item)"
-                >
-                  mdi-pencil
-                </v-icon>
-                <v-icon small color="dark grey" @click="deletePatient(item)">
-                  mdi-delete
-                </v-icon>
+                <v-row>
+                  <edit-patient-dialog
+                    @buttonClicked="editPatient(item)"
+                    :defaultPatient="editedPatient"
+                    @onPatientEdited="refreshPage()"
+                  ></edit-patient-dialog>
+
+                  <delete-patient-dialog
+                    @buttonClicked="deletePatient(item)"
+                    :patient="deletedPatient"
+                    @onPatientDeleted="refreshPage()"
+                  ></delete-patient-dialog>
+                </v-row>
               </template>
             </v-data-table>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
-    <v-dialog v-model="dialogDelete" max-width="500px">
-      <v-card>
-        <v-card-title class="black small lighten white--text"
-          >Are you sure you want to delete this patient?</v-card-title
-        >
-        <v-card-actions>
-          <v-btn color="green" small text @click="closeDelete">Cancel</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn color="red" small text @click="confirmPatientDeletion"
-            >Delete</v-btn
-          >
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <create-patient
-      :active="createPatientDialog"
-      @closeDialog="closeCreatePatientDialog()"
-    ></create-patient>
   </v-container>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import patientsService from "@/services/patients";
-import CreatePatient from "./CreatePatient.vue";
+import CreatePatientDialog from "./CreatePatientDialog.vue";
+import EditPatientDialog from "./EditPatientDialog.vue";
+import DeletePatientDialog from "./DeletePatientDialog.vue";
 
 export default {
   name: "PatientsTable",
   components: {
-    CreatePatient,
+    CreatePatientDialog,
+    EditPatientDialog,
+    DeletePatientDialog,
   },
   data: () => ({
-    createPatientDialog: false,
-    dialogDelete: false,
+    editedPatient: {},
+    deletedPatient: {},
     key: 0,
     search: "",
     patients: [],
@@ -111,36 +101,16 @@ export default {
       this.$router.push("/login");
     },
     editPatient(item) {
-      this.editedIndex = this.patients.indexOf(item);
-      console.log("edited index");
-      console.log(this.editedIndex);
-      this.editedPatient = JSON.parse(
-        JSON.stringify(this.patients[this.editedIndex])
-      );
-      this.openCreatePatientDialog();
+      this.editedPatient = { ...item };
     },
     deletePatient(item) {
-      this.editedIndex = this.patients.indexOf(item);
-      this.editedPatient = JSON.parse(JSON.stringify(item));
-      this.dialogDelete = true;
+      this.deletedPatient = { ...item };
     },
-    confirmPatientDeletion() {
-      this.patients.splice(this.editedIndex, 1);
-
-      this.closeDelete();
+    getFullAddressFromObject(address) {
+      return Object.values(address).join(", ");
     },
-    closeDelete() {
-      this.dialogDelete = false;
-      this.$nextTick(() => {
-        this.editedPatient = JSON.parse(JSON.stringify(this.patient));
-        this.editedIndex = -1;
-      });
-    },
-    openCreatePatientDialog() {
-      this.createPatientDialog = true;
-    },
-    closeCreatePatientDialog() {
-      this.createPatientDialog = false;
+    refreshPage() {
+      this.$router.go(0);
     },
   },
 

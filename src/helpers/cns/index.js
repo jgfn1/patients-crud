@@ -1,5 +1,6 @@
 const cnsHelper = {
   validateCns: (cns) => {
+    cns = cns.replace(/[^\d]+/g, ""); // Remove non-numeric characters
     let isValid = false;
     const firstDigit = cns[0];
     if (firstDigit === "1" || firstDigit === "2") {
