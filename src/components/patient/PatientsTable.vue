@@ -1,12 +1,18 @@
 <template>
   <v-container fluid class="fill-height">
-    <v-row justify="center">
-      <v-col lg="6" md="8" sm="10" xs="10">
-        <v-card>
+    <v-row justify="end">
+      <v-btn dark small right @click="doLogout()" class="mt-2 mr-3">
+        Logout
+        <v-icon>mdi-exit-to-app</v-icon>
+      </v-btn>
+    </v-row>
+    <v-row justify="center" align="center">
+      <v-col lg="10" md="10" sm="10" xs="10">
+        <v-card class="mx-2">
           <v-card-title>
             Patients
             <v-spacer></v-spacer>
-            <v-btn @click="dialog = true" small text color="black">
+            <v-btn @click="openCreatePatientDialog()" small text color="black">
               Add new Patient
               <v-icon>mdi-plus</v-icon>
             </v-btn>
@@ -29,16 +35,19 @@
               :search="search"
               :key="key"
             >
+              <template v-slot:[`item.photo`]="{ item }">
+                <v-img :src="item.photo" width="75%"></v-img>
+              </template>
               <template v-slot:[`item.actions`]="{ item }">
                 <v-icon
                   small
                   color="black"
                   class="mr-2"
-                  @click="editItem(item)"
+                  @click="editPatient(item)"
                 >
                   mdi-pencil
                 </v-icon>
-                <v-icon small color="dark grey" @click="deleteItem(item)">
+                <v-icon small color="dark grey" @click="deletePatient(item)">
                   mdi-delete
                 </v-icon>
               </template>
@@ -47,7 +56,6 @@
         </v-card>
       </v-col>
     </v-row>
-
     <v-dialog v-model="dialogDelete" max-width="500px">
       <v-card>
         <v-card-title class="black small lighten white--text"
@@ -56,27 +64,32 @@
         <v-card-actions>
           <v-btn color="green" small text @click="closeDelete">Cancel</v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="red" small text @click="confirmItemDeletion"
+          <v-btn color="red" small text @click="confirmPatientDeletion"
             >Delete</v-btn
           >
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-btn dark small absolute right style="top: 2vh" @click="doLogout()">
-      Logout
-      <v-icon>mdi-exit-to-app</v-icon>
-    </v-btn>
+    <create-patient
+      :active="createPatientDialog"
+      @closeDialog="closeCreatePatientDialog()"
+    ></create-patient>
   </v-container>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import patientsService from "@/services/patients";
+import CreatePatient from "./CreatePatient.vue";
+
 export default {
   name: "PatientsTable",
+  components: {
+    CreatePatient,
+  },
   data: () => ({
-    dialog: false,
+    createPatientDialog: false,
     dialogDelete: false,
-    saveButtonLoading: false,
     key: 0,
     search: "",
     patients: [],
@@ -97,59 +110,42 @@ export default {
       this.logout();
       this.$router.push("/login");
     },
-    async save() {
-      this.saveButtonLoading = true;
-      if (this.editedIndex > -1) {
-        //edit
-      } else {
-        //create
-      }
-      this.saveButtonLoading = false;
-      this.key++;
-      this.close();
-    },
-
-    editItem(item) {
+    editPatient(item) {
       this.editedIndex = this.patients.indexOf(item);
       console.log("edited index");
       console.log(this.editedIndex);
-      this.editedItem = JSON.parse(
+      this.editedPatient = JSON.parse(
         JSON.stringify(this.patients[this.editedIndex])
       );
-      this.dialog = true;
+      this.openCreatePatientDialog();
     },
-
-    deleteItem(item) {
+    deletePatient(item) {
       this.editedIndex = this.patients.indexOf(item);
-      this.editedItem = JSON.parse(JSON.stringify(item));
+      this.editedPatient = JSON.parse(JSON.stringify(item));
       this.dialogDelete = true;
     },
-
-    confirmItemDeletion() {
+    confirmPatientDeletion() {
       this.patients.splice(this.editedIndex, 1);
 
       this.closeDelete();
     },
-
-    close() {
-      this.dialog = false;
-      this.$nextTick(() => {
-        this.editedItem = JSON.parse(JSON.stringify(this.patient));
-        this.editedIndex = -1;
-      });
-    },
-
     closeDelete() {
       this.dialogDelete = false;
       this.$nextTick(() => {
-        this.editedItem = JSON.parse(JSON.stringify(this.patient));
+        this.editedPatient = JSON.parse(JSON.stringify(this.patient));
         this.editedIndex = -1;
       });
+    },
+    openCreatePatientDialog() {
+      this.createPatientDialog = true;
+    },
+    closeCreatePatientDialog() {
+      this.createPatientDialog = false;
     },
   },
 
   async mounted() {
-    //  load patients
+    this.patients = await patientsService.getPatients();
   },
 };
 </script>

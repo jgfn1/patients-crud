@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import PatientsTable from "../components/PatientsTable";
+import PatientsTable from "@/components/patient/PatientsTable";
 
 export default {
   name: "HomeView",

@@ -1,8 +1,8 @@
 <template>
-  <v-dialog v-model="dialog" persistent>
+  <v-dialog v-model="isActive" persistent>
     <v-card>
       <v-card-title class="black lighten white--text">
-        {{ formTitle }}
+        Edit patient
       </v-card-title>
       <v-card-subtitle>
         <br />
@@ -19,10 +19,15 @@
 
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn @click="close" text color="dark grey">Cancel</v-btn>
+        <v-btn @click="closeDialog" text color="dark grey">Cancel</v-btn>
         <v-spacer></v-spacer>
-        <v-btn @click="save" :loading="saveButtonLoading" text color="black">
-          Save
+        <v-btn
+          @click="savePatient"
+          :loading="saveButtonLoading"
+          text
+          color="black"
+        >
+          save
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -32,16 +37,9 @@
 <script>
 export default {
   name: "CreatePaient",
+  props: ["active", "patient"],
   data: () => ({
-    patient: {
-      photo: "",
-      name: "",
-      mothersName: "",
-      birthdate: "",
-      cpf: "",
-      cns: "",
-      address: "",
-    },
+    saveButtonLoading: false,
     editedPatient: {
       photo: "",
       name: "",
@@ -52,9 +50,25 @@ export default {
       address: "",
     },
   }),
+  methods: {
+    async savePatient() {
+      this.saveButtonLoading = true;
+      if (this.editedIndex > -1) {
+        //edit
+      } else {
+        //create
+      }
+      this.saveButtonLoading = false;
+      this.key++;
+      this.closeDialog();
+    },
+    closeDialog() {
+      this.$emit("closeDialog");
+    },
+  },
   computed: {
-    formTitle() {
-      return this.editedPatientIndex === -1 ? "Create patient" : "Edit patient";
+    isActive() {
+      return this.active;
     },
   },
 };

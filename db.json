@@ -1,0 +1,70 @@
+{
+  "patients": [
+    {
+      "id": 0,
+      "photo": "https://randomuser.me/api/portraits/women/1.jpg",
+      "name": "Alice Silva Santos",
+      "mothersName": "Marta Silva Santos",
+      "birthdate": "03/02/1985",
+      "cpf": "888.370.641-71",
+      "cns": "274 3942 7855 0018",
+      "address": {
+        "logradouro": "Rua do Arvoredo",
+        "numero": "123",
+        "complemento": "apto 101",
+        "bairro": "Bairro",
+        "localidade": "São Paulo",
+        "uf": "SP",
+        "cep": "01001-000",
+        "ibge": "3550308",
+        "gia": "1004",
+        "ddd": "11",
+        "siafi": "7107"
+      }
+    },
+    {
+      "id": 1,
+      "photo": "https://randomuser.me/api/portraits/men/2.jpg",
+      "name": "Carlos Pereira Souza",
+      "mothersName": "Ana Pereira Souza",
+      "birthdate": "12/05/1978",
+      "cpf": "124.789.543-21",
+      "cns": "144 9174 3662 0002",
+      "address": {
+        "logradouro": "Rua da Praia",
+        "numero": "456",
+        "complemento": "casa 3",
+        "bairro": "bairro",
+        "localidade": "Florianópolis",
+        "uf": "SC",
+        "cep": "88010-090",
+        "ibge": "4205407",
+        "gia": "811",
+        "ddd": "48",
+        "siafi": "8051"
+      }
+    },
+    {
+      "photo": "https://randomuser.me/api/portraits/women/3.jpg",
+      "name": "Camila Oliveira Santos",
+      "mothersName": "Patricia Oliveira Santos",
+      "birthdate": "17/09/1992",
+      "cpf": "345.678.901-23",
+      "cns": "993 2864 5153 0005",
+      "address": {
+        "logradouro": "Avenida das Flores",
+        "numero": "456",
+        "complemento": "apto 1203",
+        "bairro": "bairro",
+        "localidade": "Rio de Janeiro",
+        "uf": "RJ",
+        "cep": "20081-000",
+        "ibge": "3304557",
+        "gia": "6001",
+        "ddd": "21",
+        "siafi": "6001"
+      },
+      "id": 2
+    }
+  ]
+}

@@ -8,9 +8,7 @@
               color="blue"
               :indeterminate="isLoading"
             ></v-progress-linear>
-            <v-card-title class="black" style="color: white">
-              Login
-            </v-card-title>
+            <v-card-title class="black white--text"> Login </v-card-title>
             <v-card-text>
               <v-row>
                 <v-col cols="12">
