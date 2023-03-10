@@ -1,4 +1,4 @@
-# patients-crud
+# Patients' Record CRUD
 
 ## Project setup
 ```
@@ -10,15 +10,8 @@ yarn install
 yarn serve
 ```
 
-### Compiles and minifies for production
+### Deployed frontend 
+####*json-server not supported, so the table will be empty
 ```
-yarn build
+https://patients-record-crud.netlify.app/
 ```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
