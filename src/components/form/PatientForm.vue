@@ -4,27 +4,27 @@
     <v-subheader>Personal Details</v-subheader>
     <v-divider></v-divider>
     <v-row class="mt-3">
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <photo-input
           @onPhotoSelected="onPhotoSelected"
           :photo="patient.photo"
         ></photo-input>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <v-text-field
           v-model.lazy="patient.name"
           label="Full name"
           outlined
         ></v-text-field>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <v-text-field
           v-model.lazy="patient.mothersName"
           label="Mother's full name"
           outlined
         ></v-text-field>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <v-text-field
           prepend-inner-icon="mdi-calendar"
           v-model.lazy="patient.birthdate"
@@ -34,7 +34,7 @@
           v-mask="'##/##/####'"
         ></v-text-field>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <v-text-field
           v-model.lazy="patient.cpf"
           label="CPF"
@@ -42,7 +42,7 @@
           v-mask="'###.###.###-##'"
         ></v-text-field>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <v-text-field
           v-model.lazy="patient.cns"
           label="CNS"
@@ -55,13 +55,13 @@
     <v-divider></v-divider>
 
     <v-row class="mt-3">
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <cep-input
           @onAddressRetrievedFromCep="onAddressRetrievedFromCep"
           :defaultCep="getAddress.cep"
         ></cep-input>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <v-text-field
           v-model.lazy="getAddress.logradouro"
           label="Street"
@@ -69,11 +69,11 @@
         >
         </v-text-field>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <v-text-field v-model.lazy="getAddress.numero" label="Number" outlined>
         </v-text-field>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <v-text-field
           v-model.lazy="getAddress.complemento"
           label="Complement"
@@ -81,7 +81,7 @@
         >
         </v-text-field>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <v-text-field
           v-model.lazy="getAddress.bairro"
           label="District"
@@ -89,7 +89,7 @@
         >
         </v-text-field>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <v-text-field
           v-model.lazy="getAddress.localidade"
           label="City"
@@ -97,7 +97,7 @@
         >
         </v-text-field>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3">
         <v-text-field v-model.lazy="getAddress.uf" label="State" outlined>
         </v-text-field>
       </v-col>

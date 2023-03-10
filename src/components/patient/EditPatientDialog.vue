@@ -4,7 +4,7 @@
       <v-btn
         v-on="on"
         x-small
-        color="black"
+        color="grey darken-3"
         class="mr-2"
         icon
         @click="$emit('buttonClicked')"
@@ -13,7 +13,7 @@
       </v-btn>
     </template>
     <v-card v-if="editPatientDialog">
-      <v-card-title class="black lighten white--text">
+      <v-card-title class="grey darken-3 white--text">
         Edit patient
       </v-card-title>
       <v-card-subtitle>
@@ -31,7 +31,7 @@
 
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn @click="closeEditPatientDialog" text color="dark grey"
+        <v-btn @click="closeEditPatientDialog" text color="grey darken-2"
           >Cancel</v-btn
         >
         <v-spacer></v-spacer>
@@ -39,7 +39,7 @@
           @click="savePatient"
           :loading="isSaveButtonLoading"
           text
-          color="black"
+          color="grey darken-4"
           :disabled="!isFormValid"
         >
           save

@@ -1,21 +1,22 @@
 <template>
   <v-container fluid class="fill-height">
-    <v-row class="text-center" justify="center" align="center">
+    <v-row justify="center">
       <v-col lg="3" md="4" sm="6" xs="6">
-        <v-form>
-          <v-card @keyup.enter="doLogin()">
-            <v-progress-linear
-              color="blue"
-              :indeterminate="isLoading"
-            ></v-progress-linear>
-            <v-card-title class="black white--text"> Login </v-card-title>
-            <v-card-text>
+        <v-card @keyup.enter="doLogin()" class="rounded-md" elevation="5">
+          <v-progress-linear
+            color="grey darken-1"
+            class="rounded-xl"
+            :indeterminate="isLoading"
+          ></v-progress-linear>
+          <v-card-title class="grey darken-3 white--text"> Login </v-card-title>
+          <v-card-text>
+            <v-form>
               <v-row>
                 <v-col cols="12">
                   <v-text-field
                     prepend-icon="mdi-at"
                     v-model="username"
-                    color="black"
+                    color="grey darken-3"
                     placeholder="Username"
                     required
                     :rules="[usernameRules]"
@@ -26,7 +27,7 @@
                     prepend-icon="mdi-lock"
                     :type="passwordVisibility"
                     v-model="password"
-                    color="black"
+                    color="grey darken-3"
                     placeholder="Password"
                     :append-icon="passwordAppendIcon"
                     @click:append="togglePasswordVisibility"
@@ -35,21 +36,21 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                small
-                color="black"
-                text
-                @click.native="doLogin()"
-                :disabled="isLoading"
-              >
-                Enter
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-form>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              small
+              color="grey darken-3"
+              text
+              @click.native="doLogin()"
+              :disabled="isLoading"
+            >
+              Enter
+            </v-btn>
+          </v-card-actions>
+        </v-card>
       </v-col>
     </v-row>
     <v-snackbar

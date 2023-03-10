@@ -1,15 +1,9 @@
 <template>
   <v-container fluid class="fill-height">
-    <v-row justify="end">
-      <v-btn dark small right @click="doLogout()" class="mt-2 mr-3">
-        Logout
-        <v-icon>mdi-exit-to-app</v-icon>
-      </v-btn>
-    </v-row>
     <v-row justify="center" align="center">
-      <v-col lg="10" md="10" sm="10" xs="10">
-        <v-card class="mx-2">
-          <v-card-title>
+      <v-col>
+        <v-card class="ma-3" elevation="5">
+          <v-card-title class="grey darken-3 white--text">
             Patients
             <v-spacer></v-spacer>
             <create-patient-dialog
@@ -19,10 +13,12 @@
           <v-card-subtitle>
             <v-text-field
               v-model="search"
+              color="grey darken-3"
               append-icon="mdi-magnify"
               label="Search for a patient by name or attribute"
               single-line
               hide-details
+              class="pt-5"
             ></v-text-field>
           </v-card-subtitle>
           <v-card-text>
@@ -30,9 +26,11 @@
               no-data-text="No patients"
               :headers="headers"
               :items="patients"
-              :items-per-page="15"
+              :items-per-page="5"
               :search="search"
-              :key="key"
+              :footer-props="{ itemsPerPageOptions: [3, 5, 15, 25, 50] }"
+              class="elevation-0"
+              :loading="isLoadingPatients"
             >
               <template v-slot:[`item.photo`]="{ item }">
                 <v-img :src="item.photo" width="75%" max-width="100px"></v-img>
@@ -41,13 +39,12 @@
                 {{ getFullAddressFromObject(item.address) }}
               </template>
               <template v-slot:[`item.actions`]="{ item }">
-                <v-row>
+                <v-row dense>
                   <edit-patient-dialog
                     @buttonClicked="editPatient(item)"
                     :defaultPatient="editedPatient"
                     @onPatientEdited="refreshPage()"
                   ></edit-patient-dialog>
-
                   <delete-patient-dialog
                     @buttonClicked="deletePatient(item)"
                     :patient="deletedPatient"
@@ -64,7 +61,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import patientsService from "@/services/patients";
 import CreatePatientDialog from "./CreatePatientDialog.vue";
 import EditPatientDialog from "./EditPatientDialog.vue";
@@ -80,11 +76,11 @@ export default {
   data: () => ({
     editedPatient: {},
     deletedPatient: {},
-    key: 0,
+    isLoadingPatients: false,
     search: "",
     patients: [],
     headers: [
-      { text: "Photo", value: "photo" },
+      { text: "Photo", value: "photo", sortable: false },
       { text: "Name", value: "name" },
       { text: "Mother's Name", value: "mothersName" },
       { text: "Birthdate", value: "birthdate" },
@@ -95,11 +91,6 @@ export default {
     ],
   }),
   methods: {
-    ...mapActions(["logout"]),
-    doLogout() {
-      this.logout();
-      this.$router.push("/login");
-    },
     editPatient(item) {
       this.editedPatient = { ...item };
     },
@@ -115,7 +106,13 @@ export default {
   },
 
   async mounted() {
-    this.patients = await patientsService.getPatients();
+    this.isLoadingPatients = true;
+    try {
+      this.patients = await patientsService.getPatients();
+    } catch (error) {
+      console.log(error);
+    }
+    this.isLoadingPatients = false;
   },
 };
 </script>

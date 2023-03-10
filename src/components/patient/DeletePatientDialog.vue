@@ -4,7 +4,7 @@
       <v-btn
         v-on="on"
         x-small
-        color="dark grey"
+        color="grey darken-3"
         icon
         @click="$emit('buttonClicked')"
       >
@@ -12,15 +12,19 @@
       </v-btn>
     </template>
     <v-card>
-      <v-card-title class="black small lighten white--text"
+      <v-card-title class="grey darken-3 small lighten white--text"
         >Are you sure you want to delete this patient?</v-card-title
       >
       <v-card-actions>
-        <v-btn color="green" small text @click="closeDeletePatientDialog"
+        <v-btn
+          color="grey darken-4"
+          small
+          text
+          @click="closeDeletePatientDialog"
           >Cancel</v-btn
         >
         <v-spacer></v-spacer>
-        <v-btn color="red" small text @click="confirmPatientDeletion"
+        <v-btn color="grey darken-2" small text @click="confirmPatientDeletion"
           >Delete</v-btn
         >
       </v-card-actions>

@@ -1,14 +1,14 @@
 <template>
   <v-dialog v-model="createPatientDialog" persistent>
     <template v-slot:activator="{ on }">
-      <v-btn v-on="on" small text color="black">
-        Add new Patient
+      <v-btn v-on="on" small color="white">
+        Create Patient
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </template>
 
     <v-card>
-      <v-card-title class="black lighten white--text">
+      <v-card-title class="grey darken-3 white--text">
         Create patient
       </v-card-title>
 
@@ -21,7 +21,7 @@
 
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn @click="closeCreatePatientDialog" text color="dark grey"
+        <v-btn @click="closeCreatePatientDialog" text color="grey darken-2"
           >Cancel</v-btn
         >
         <v-spacer></v-spacer>
@@ -29,7 +29,7 @@
           @click="savePatient"
           :loading="isSaveButtonLoading"
           text
-          color="black"
+          color="grey darken-4"
           :disabled="!isFormValid"
         >
           save
