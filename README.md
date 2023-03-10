@@ -12,6 +12,5 @@ yarn serve
 
 ### Deployed frontend 
 ###### *json-server not supported, so the table will be empty
-```
 [Click here!](https://patients-record-crud.netlify.app/)
-```
+
